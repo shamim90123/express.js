@@ -32,10 +32,23 @@ exports.bulkInsertUsers = async (req, res) => {
 // ✅ Get All Users
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().limit(100); // limit to 100 users for now
+    const users = await User.find().sort({ _id: -1 }).limit(100); // limit to 100 users for now
     res.status(200).json(users);
   } catch (error) {
     console.error('❌ Failed to fetch users:', error);
     res.status(500).json({ error: 'Failed to fetch users' });
+  }
+};
+
+// Create a new user
+exports.createUser = async (req, res) => {
+  try {
+    const { name, email, age } = req.body;
+
+    const newUser = await User.create({ name, email, age });
+    res.status(201).json(newUser);
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.status(500).json({ error: 'Failed to create user' });
   }
 };
