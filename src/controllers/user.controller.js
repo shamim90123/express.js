@@ -12,23 +12,26 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-// Create a new user
-exports.createUser = async (req, res) => {
+
+exports.createUser = async (req, res, next) => {
   try {
     const { name, email, age } = req.body;
 
+    // Check for duplicate email
     const exists = await User.findOne({ email });
     if (exists) {
-      return res.status(409).json({ error: 'Email already exists' });
+      const error = new Error('Email already exists');
+      error.status = 409; // Conflict
+      return next(error); // ⬅️ pass to global handler
     }
 
     const newUser = await User.create({ name, email, age });
     res.status(201).json(newUser);
   } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(500).json({ error: 'Failed to create user' });
+    next(error); // ⬅️ pass unexpected errors to global handler
   }
 };
+
 
 // Generate dummy users
 function generateUsers(count) {
@@ -52,7 +55,6 @@ exports.bulkInsertUsers = async (req, res) => {
     await User.insertMany(users);
     res.status(201).json({ message: '✅ 50,000 users inserted successfully!' });
   } catch (error) {
-    console.error('❌ Insert failed:', error);
-    res.status(500).json({ error: 'Failed to insert users' });
+    next(error); // pass to global handler
   }
 };
