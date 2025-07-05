@@ -4,20 +4,8 @@ const userController = require('../controllers/user.controller');
 const { userValidationRules } = require('../middlewares/validators/user.validator');
 const { validateRequest } = require('../middlewares/validationMiddleware');
 
-// 🧼 Clean and readable route
-router.post(
-  '/user',
-  userValidationRules,
-  validateRequest,
-  userController.createUser
-);
-
-router.post('/bulk-insert', userController.bulkInsertUsers);
-
-router.get('/', (req, res) => {
-  res.send('User route working!');
-});
-
-router.get('/user-list', userController.getAllUsers);
+router.post('/', userValidationRules, validateRequest, userController.createUser);
+router.get('/', userController.getAllUsers);
+router.post('/bulk', userController.bulkInsertUsers);
 
 module.exports = router;

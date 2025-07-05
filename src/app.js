@@ -1,30 +1,19 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const userRoutes = require('./routes/user.routes');
+const routes = require('./routes'); // Automatically loads all routes
 const logger = require('./middlewares/logger');
-
-dotenv.config(); // Load .env variables
+const { errorHandler, notFound } = require('./middlewares/errorHandler');
 
 const app = express();
 
-app.use(logger); // applies to all routes
-
-// Middleware to parse URL-encoded bodies (for form submissions)
+app.use(logger);
 app.use(express.urlencoded({ extended: true }));
-
-// Middleware
-app.use(express.json()); // Parse JSON bodies
+app.use(express.json());
 
 // Routes
-app.use('/api/users', userRoutes);
+app.use('/api', routes);
 
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('✅ MongoDB connected'))
-.catch((err) => console.error('❌ MongoDB connection error:', err));
+// 404 & Global error handlers
+app.use(notFound);
+app.use(errorHandler);
 
 module.exports = app;
