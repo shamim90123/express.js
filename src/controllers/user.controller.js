@@ -1,13 +1,12 @@
 const User = require('../models/user.model');
 const { faker } = require('@faker-js/faker');
+const paginate = require('../utils/paginate');
 
 // ✅ Get All Users
 exports.getAllUsers = async (req, res) => {
   try {
     
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 100;
-    const skip = (page - 1) * limit;
+    const { page, limit, skip } = paginate(req);
 
     const users = await User.find()
     .sort({ name: 1 })
@@ -24,13 +23,13 @@ exports.getAllUsers = async (req, res) => {
 
     const filteredUsers = formattedUsers.filter(user => user.age >= 50);
 
-    res.status(200).json(
-      {
-        message: '✅ Users fetched successfully!',
-        total: filteredUsers.length,
-        users: filteredUsers
-      }
-    );
+    res.status(200).json({
+      message: '✅ Users fetched successfully!',
+      page,
+      limit,
+      count: filteredUsers.length,
+      users: filteredUsers
+    });
   } catch (error) {
     console.error('❌ Failed to fetch users:', error);
     res.status(500).json({ error: 'Failed to fetch users' });
