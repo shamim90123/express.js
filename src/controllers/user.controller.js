@@ -4,8 +4,33 @@ const { faker } = require('@faker-js/faker');
 // ✅ Get All Users
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().sort({ _id: -1 }).limit(100); // limit to 100 users for now
-    res.status(200).json(users);
+    
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 100;
+    const skip = (page - 1) * limit;
+
+    const users = await User.find()
+    .sort({ name: 1 })
+    .skip(skip)
+    .limit(limit);
+
+    const formattedUsers = users.map(user => ({
+      id: user._id,
+      fullName: user.name,
+      email: user.email,
+      age: user.age,
+      status: 'active'
+    }))
+
+    const filteredUsers = formattedUsers.filter(user => user.age >= 50);
+
+    res.status(200).json(
+      {
+        message: '✅ Users fetched successfully!',
+        total: filteredUsers.length,
+        users: filteredUsers
+      }
+    );
   } catch (error) {
     console.error('❌ Failed to fetch users:', error);
     res.status(500).json({ error: 'Failed to fetch users' });
