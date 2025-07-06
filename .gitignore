@@ -44,3 +44,6 @@ dump/
 # Others
 *.bak
 *.swp
+
+# package-lock.json
+package-lock.json

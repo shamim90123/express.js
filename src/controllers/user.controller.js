@@ -9,7 +9,7 @@ exports.getAllUsers = async (req, res) => {
     const { page, limit, skip } = paginate(req);
 
     const users = await User.find()
-    .sort({ name: 1 })
+    .sort({ _id: -1 })
     .skip(skip)
     .limit(limit);
 
@@ -18,7 +18,8 @@ exports.getAllUsers = async (req, res) => {
       fullName: user.name,
       email: user.email,
       age: user.age,
-      status: 'active'
+      status: 'active',
+      password:  user.password, // Include password for demonstration purposes
     }))
 
     const filteredUsers = formattedUsers.filter(user => user.age >= 50);
