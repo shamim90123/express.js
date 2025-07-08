@@ -29,29 +29,7 @@ A scalable and secure Express.js REST API starter built with best practices.
 
 ## 📂 Folder Structure
 
-project-root/
-├── src/
-│   ├── app.js                  # Main Express app configuration
-│   ├── server.js               # Server bootstrap file
-│   ├── routes/
-│   │   └── user.routes.js      # User-related API routes
-│   ├── controllers/
-│   │   └── user.controller.js  # Business logic for user routes
-│   ├── models/
-│   │   └── user.model.js       # Mongoose schema/model
-│   ├── middlewares/
-│   │   ├── logger.js               # Custom request logger
-│   │   ├── errorHandler.js         # Global & 404 error handlers
-│   │   ├── validationMiddleware.js # Common validation handling
-│   │   └── validators/
-│   │       └── user.validator.js  # express-validator rules
-│   └── config/
-│       └── db.js              # MongoDB connection setup
-├── .env                       # Environment variables
-├── .gitignore                 # Git ignore file
-├── package.json               # Project metadata & dependencies
-└── README.md                  # Project documentation
-
+<pre> project-root/ ├── src/ │ ├── app.js # Main Express config │ ├── server.js # Start server │ ├── config/ │ │ └── db.js # MongoDB connection config │ ├── routes/ │ │ └── user.routes.js # User route definitions │ ├── controllers/ │ │ └── user.controller.js # Route logic (CRUD, bulk insert) │ ├── models/ │ │ └── user.model.js # Mongoose schema/model │ ├── middlewares/ │ │ ├── logger.js # Request logger │ │ ├── errorHandler.js # Global error + 404 handler │ │ ├── validationMiddleware.js # Middleware to check validation result │ │ └── validators/ │ │ └── user.validator.js # Validation rules (express-validator) ├── .env # Environment variables ├── .gitignore # Files/folders to ignore in Git ├── package.json # Dependencies & scripts └── README.md # Project info & documentation </pre>
 
 
 ---
