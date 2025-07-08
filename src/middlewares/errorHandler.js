@@ -1,5 +1,5 @@
 // Global error handler
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, res) => {
   console.error('❌ Global Error:', err);
 
   res.status(err.status || 500).json({
@@ -9,7 +9,7 @@ const errorHandler = (err, req, res, next) => {
 };
 
 // 404 Not Found handler
-const notFound = (req, res, next) => {
+const notFound = (res) => {
   res.status(404).json({ success: false, message: 'Route not found' });
 };
 
