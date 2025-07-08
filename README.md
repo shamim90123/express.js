@@ -30,29 +30,28 @@ A scalable and secure Express.js REST API starter built with best practices.
 ## 📂 Folder Structure
 
 project-root/
-│
 ├── src/
-│ ├── app.js # Main express config
-│ ├── server.js # Start server
-│ ├── routes/
-│ │ └── user.routes.js
-│ ├── controllers/
-│ │ └── user.controller.js
-│ ├── models/
-│ │ └── user.model.js
-│ ├── middlewares/
-│ │ ├── logger.js
-│ │ ├── errorHandler.js
-│ │ ├── validationMiddleware.js
-│ │ └── validators/
-│ │ └── user.validator.js
-│ └── config/
-│ └── db.js
-│
-├── .env
-├── .gitignore
-├── package.json
-└── README.md
+│   ├── app.js                  # Main Express app configuration
+│   ├── server.js               # Server bootstrap file
+│   ├── routes/
+│   │   └── user.routes.js      # User-related API routes
+│   ├── controllers/
+│   │   └── user.controller.js  # Business logic for user routes
+│   ├── models/
+│   │   └── user.model.js       # Mongoose schema/model
+│   ├── middlewares/
+│   │   ├── logger.js               # Custom request logger
+│   │   ├── errorHandler.js         # Global & 404 error handlers
+│   │   ├── validationMiddleware.js # Common validation handling
+│   │   └── validators/
+│   │       └── user.validator.js  # express-validator rules
+│   └── config/
+│       └── db.js              # MongoDB connection setup
+├── .env                       # Environment variables
+├── .gitignore                 # Git ignore file
+├── package.json               # Project metadata & dependencies
+└── README.md                  # Project documentation
+
 
 
 ---
