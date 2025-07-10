@@ -6,7 +6,7 @@ const userRoutes = require('./user.routes');
 const authRoutes = require('./auth.routes');
 
 // Grouped and modular
-router.use('/users', protect, userRoutes);
+router.use('/users', userRoutes);
 router.use('/auth', authRoutes);
 
 module.exports = router;

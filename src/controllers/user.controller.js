@@ -22,7 +22,7 @@ exports.getAllUsers = async (req, res) => {
       password:  user.password, // Include password for demonstration purposes
     }))
 
-    const filteredUsers = formattedUsers.filter(user => user.age >= 50);
+    const filteredUsers = formattedUsers.filter(user => user.age >= 18);
 
     res.status(200).json({
       message: '✅ Users fetched successfully!',
@@ -66,7 +66,8 @@ function generateUsers(count) {
     users.push({
       name: faker.person.fullName(),
       email: faker.internet.email(),
-      age: faker.number.int({ min: 18, max: 60 })
+      age: faker.number.int({ min: 18, max: 60 }),
+      password: faker.internet.password(12, false, /[a-zA-Z0-9!@#$%^&*()_+]/), // Strong password
     });
   }
 
@@ -74,11 +75,11 @@ function generateUsers(count) {
 }
 
 // Bulk insert controller
-exports.bulkInsertUsers = async (req, res) => {
+exports.bulkInsertUsers = async (req, res, next) => {
   try {
-    const users = generateUsers(50000);
+    const users = generateUsers(500000);
     await User.insertMany(users);
-    res.status(201).json({ message: '✅ 50,000 users inserted successfully!' });
+    res.status(201).json({ message: '✅ 5,00,000 users inserted successfully!' });
   } catch (error) {
     next(error); // pass to global handler
   }
